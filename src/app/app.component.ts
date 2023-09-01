@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { WeatherService } from './services/weather.service';
 import { WeatherData } from './models/weather.model';
 import { HttpErrorResponse } from '@angular/common/http';
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -16,11 +15,20 @@ export class AppComponent implements OnInit {
 
   weatherData?: WeatherData;
   cityName: string = "Jaipur";
- 
+  city: string = "";
+  toggle: boolean = false;
+  x = this.weatherData?.sunrise;
+  unix: number | undefined = this.x;
+  date?: Date;
+
+
+  formatter = (unix: number) => {
+    this.date = new Date(unix * 1000);
+    return this.date.toLocaleTimeString("en-US");
+  }
   ngOnInit(): void {
 
   }
-  city: string = 'Jaipur';
   iserror: boolean = false;
   onSubmit() {
     this.getWeatherData(this.cityName);
@@ -34,6 +42,7 @@ export class AppComponent implements OnInit {
           this.weatherData = response;
           this.city = cityName;
           this.cityName = '';
+
         },
         error: (error) => {
           alert('Please enter a valid city !!');
@@ -43,4 +52,5 @@ export class AppComponent implements OnInit {
       });
 
   }
+
 }
