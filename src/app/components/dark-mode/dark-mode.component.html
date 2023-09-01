@@ -1,0 +1,91 @@
+<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<div class="search">
+    <form #form="ngForm" (submit)="onSubmit()"><input type="text" placeholder="Search City" name="city"
+            [(ngModel)]="cityName"></form>
+</div>
+
+
+<div class="container" *ngIf="weatherData">
+    <div class="upper-data">
+        <img src="../assets/hot2.jpg" *ngIf="weatherData.temp > 15" />
+        <img src="../assets/cold3.jpg" *ngIf="weatherData.temp <= 15" />
+        <div class="weather-data">
+            <div class="location">{{city}}</div>
+            <div class="temperature">{{weatherData.temp }} &deg;C</div>
+        </div>
+    </div>
+    <div class="lower-data">
+        <div>
+
+            <span class="more-info-label"><button *ngIf="!toggle" (click)="toggle = !toggle" mat-mini-fab color="accent"
+                    aria-label="Example arrow icon"><mat-icon>play_arrow</mat-icon></button></span>
+            <span class="more-info-label"><button *ngIf="toggle" (click)="toggle = !toggle" mat-mini-fab color="accent"
+                    aria-label="Example arrow icon"><mat-icon
+                        style="transform: scale(-1,1); float:left;">play_arrow</mat-icon></button>
+            </span>
+        </div>
+        <div *ngIf="!toggle" class="more-info-container">
+            <div class="info-block">
+                <div class="info-block-label">
+                    <img src="../assets/min.png" />
+                    <span>min</span>
+                </div>
+                <div class="info-block-value">{{weatherData.min_temp }}&deg;C</div>
+            </div>
+            <div class="info-block">
+                <div class="info-block-label">
+                    <img src="../assets/max.png" />
+                    <span>max</span>
+                </div>
+                <div class="info-block-value">{{weatherData.max_temp}}&deg;C</div>
+            </div>
+            <div class="info-block">
+                <div class="info-block-label">
+                    <img src="../assets/humidity.png" />
+                    <span>humidity</span>
+                </div>
+
+                <div class="info-block-value">{{weatherData.humidity}}%</div>
+            </div>
+            <div class="info-block">
+                <div class="info-block-label">
+                    <img src="../assets/wind.png" />
+                    <span>wind</span>
+                </div>
+                <div class="info-block-value">{{weatherData.wind_speed}}km/h</div>
+            </div>
+        </div>
+        <div *ngIf="toggle" class="more-info-container">
+            <div class="info-block">
+                <div class="info-block-label">
+                    <img src="../assets/cloud.png" />
+                    <span>cloud</span>
+                </div>
+                <div class="info-block-value">{{weatherData.cloud_pct }}% </div>
+            </div>
+            <div class="info-block">
+                <div class="info-block-label">
+                    <img src="../assets/holidays.png" />
+                    <span>feels like</span>
+                </div>
+                <div class="info-block-value">{{weatherData.feels_like }}&deg;C</div>
+            </div>
+            <div class="info-block">
+                <div class="info-block-label">
+                    <img src="../assets/sunrise.png" />
+                    <span>sunrise</span>
+                </div>
+
+                <div class="info-block-value">{{formatter(weatherData.sunrise)}}</div>
+            </div>
+            <div class="info-block">
+                <div class="info-block-label">
+                    <img src="../assets/sunset.png" />
+                    <span>sunset</span>
+                </div>
+                <div class="info-block-value">{{formatter(weatherData.sunset)}}</div>
+            </div>
+        </div>
+    </div>
+</div>
