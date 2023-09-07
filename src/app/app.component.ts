@@ -26,7 +26,7 @@ export class AppComponent implements OnInit {
   }
 
   weatherData?: WeatherData;
-  cityName: string = "alaska";
+  cityName: string = "jaipur";
   city: string = "";
   toggle: boolean = false;
   x = this.weatherData?.sunrise;
