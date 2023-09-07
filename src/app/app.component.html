@@ -1,11 +1,107 @@
-<div *ngIf="mode">
-    <app-light-mode>
-    </app-light-mode>
+<!-- <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
+
+
+
+<div class="search" [style.--shadow-light-1]="shadow2" [style.--text]="textcolor">
+    <form #form="ngForm" (submit)="onSubmit()"><input type="text" placeholder="Search City" name="city"
+            [(ngModel)]="cityName"></form>
 </div>
+<div class="container" *ngIf="weatherData" [style.--green-2]="color2" [style.--shadow-light-1]="shadow2"
+    [style.--shadow-dark-1]="shadow1">
 
-<div *ngIf="!mode">
+    <div class="upper-data">
+        <img src={{url1}} *ngIf="weatherData.temp > 15" />
+        <img src={{url2}} *ngIf="weatherData.temp <= 15" />
+        <div class="weather-data">
+            <div class="location" [style.--text]="textcolor">{{city |titlecase}}</div>
+            <div class="temperature" [style.--text]="textcolor" style="font-weight:500"> {{weatherData.temp}}
+                &deg;C</div>
+        </div>
+    </div>
+    <div class=" lower-data">
+        <div>
+            <span><button *ngIf="!isok" (click)="toggler()" mat-mini-fab
+                    style="background-color:rgba(255, 255, 255, 0.1); color:white;"
+                    aria-label="Example arrow icon"><mat-icon>dark_mode</mat-icon></button></span>
+            <span><button *ngIf="isok" (click)="toggler()" mat-mini-fab
+                    style="background-color:#d3e6c6; color:rgb(62, 62, 19)" aria-label=" Example arrow icon"><mat-icon
+                        style="transform: scale(-1,1);">light_mode</mat-icon></button>
+            </span>
+            <span class="more-info-label"><button *ngIf="!toggle" (click)="toggle = !toggle" mat-mini-fab
+                    aria-label="Example arrow icon"><mat-icon>play_arrow</mat-icon></button></span>
+            <span class="more-info-label"><button *ngIf="toggle" (click)="toggle = !toggle" mat-mini-fab color="primary"
+                    aria-label="Example arrow icon" color="accent"><mat-icon
+                        style="transform: scale(-1,1);">play_arrow</mat-icon></button>
+            </span>
+        </div>
 
 
-    <app-dark-mode>
-    </app-dark-mode>
+        <div *ngIf="!toggle" class="more-info-container" [style.--shadow-light-1]="shadow2">
+            <div class="info-block">
+                <div class="info-block-label">
+                    <img src="../assets/min.png" />
+                    <span [style.--text]="textcolor">min</span>
+                </div>
+                <div class="info-block-value" [style.--text]="textcolor">{{weatherData.min_temp }}&deg;C</div>
+            </div>
+            <div class="info-block">
+                <div class="info-block-label">
+                    <img src="../assets/max.png" />
+                    <span [style.--text]="textcolor">max</span>
+                </div>
+                <div class="info-block-value" [style.--text]="textcolor">{{weatherData.max_temp}}&deg;C</div>
+            </div>
+            <div class="info-block">
+                <div class="info-block-label">
+                    <img src="../assets/humidity.png" />
+                    <span [style.--text]="textcolor">humidity</span>
+                </div>
+
+                <div class="info-block-value" [style.--text]="textcolor">{{weatherData.humidity}}%</div>
+            </div>
+            <div class="info-block">
+                <div class="info-block-label">
+                    <img src="../assets/wind.png" />
+                    <span [style.--text]="textcolor">wind</span>
+                </div>
+                <div class="info-block-value" [style.--text]="textcolor">{{weatherData.wind_speed}}km/h</div>
+            </div>
+        </div>
+
+
+
+
+        <div *ngIf="toggle" class="more-info-container" [style.--shadow-light-1]="shadow2">
+            <div class="info-block">
+                <div class="info-block-label">
+                    <img src="../assets/cloud.png" />
+                    <span [style.--text]="textcolor">cloud</span>
+                </div>
+                <div class="info-block-value" [style.--text]="textcolor">{{weatherData.cloud_pct }}% </div>
+            </div>
+            <div class="info-block">
+                <div class="info-block-label">
+                    <img src="../assets/holidays.png" />
+                    <span [style.--text]="textcolor">feels like</span>
+                </div>
+                <div class="info-block-value" [style.--text]="textcolor">{{weatherData.feels_like }}&deg;C</div>
+            </div>
+            <div class="info-block">
+                <div class="info-block-label">
+                    <img src="../assets/sunrise.png" />
+                    <span [style.--text]="textcolor">sunrise</span>
+                </div>
+
+                <div class="info-block-value" [style.--text]="textcolor">{{formatter(weatherData.sunrise)}}</div>
+            </div>
+            <div class="info-block">
+                <div class="info-block-label">
+                    <img src="../assets/sunset.png" />
+                    <span [style.--text]="textcolor">sunset</span>
+                </div>
+                <div class="info-block-value" [style.--text]="textcolor">{{formatter(weatherData.sunset)}}</div>
+            </div>
+        </div>
+    </div>
 </div>

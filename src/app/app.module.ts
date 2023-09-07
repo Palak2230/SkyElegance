@@ -9,15 +9,15 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { LightModeComponent } from './components/light-mode/light-mode.component';
-import { DarkModeComponent } from './components/dark-mode/dark-mode.component';
-import { ThemePalette } from '@angular/material/core';
-import { CommonService } from './services/common.service';
+
+
+
+
 
 @NgModule({
-  declarations: [AppComponent, LightModeComponent, DarkModeComponent],
+  declarations: [AppComponent],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule, BrowserAnimationsModule, MatButtonModule, MatIconModule, MatDividerModule, MatSlideToggleModule],
-  providers: [CommonService],
+  providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

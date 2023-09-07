@@ -5,12 +5,14 @@
   --green-2: #b0d8a3;
   --yellow-1: #fac742;
   --grey-1: #ededed;
-  --shadow-dark-1: rgb(41, 55, 41);
+  --shadow-dark-1: rgb(54, 68, 54, 0.6);
   --shadow-light-1: #d3e6c6;
   --blue-1: #3c429e;
   --blue-2: #4c52ad;
   --shadow-dark-2: rgba(0, 0, 0, 0.3);
   --shadow-light-2: rgba(255, 255, 255, 0.1);
+  --text1: black;
+  --text2: white;
 }
 * {
   margin: 0;
