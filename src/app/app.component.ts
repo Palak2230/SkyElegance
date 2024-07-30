@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { WeatherService } from './services/weather.service';
 import { WeatherData } from './models/weather.model';
 @Component({
@@ -18,14 +18,13 @@ export class AppComponent implements OnInit {
   color2: string = "#b0d8a3";
   shadow1: string = "rgb(54, 68, 54, 0.6)";
   shadow2: string = "#d3e6c6";
-
   textcolor: string = "black";
 
   constructor(private weatherService: WeatherService) {
     this.getWeatherData(this.cityName);
   }
 
-  weatherData?: WeatherData;
+  weatherData!: WeatherData;
   cityName: string = "jaipur";
   city: string = "";
   toggle: boolean = false;

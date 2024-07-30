@@ -7,7 +7,7 @@
     <form #form="ngForm" (submit)="onSubmit()"><input type="text" placeholder="Search City" name="city"
             [(ngModel)]="cityName"></form>
 </div>
-<div class="container" *ngIf="weatherData" [style.--green-2]="color2" [style.--shadow-light-1]="shadow2"
+<div class="container" [style.--green-2]="color2" [style.--shadow-light-1]="shadow2"
     [style.--shadow-dark-1]="shadow1">
 
     <div class="upper-data">
@@ -19,7 +19,7 @@
                 &deg;C</div>
         </div>
     </div>
-    <div class=" lower-data">
+    <div class="lower-data">
         <div>
             <span><button *ngIf="!isok" (click)="toggler()" mat-mini-fab
                     style="background-color:rgba(255, 255, 255, 0.1); color:white;"
