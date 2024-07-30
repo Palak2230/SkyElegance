@@ -1,6 +1,6 @@
 export const environment = {
   production: false,
-  weatherApiBaseUrl: 'https://weather-by-api-ninjas.p.rapidapi.com/v1/weather',
+  weatherApiBaseUrl: 'https://api.tomorrow.io/v4/weather/forecast?location=42.3478,-71.0466&apikey=JwdPvNkwIcpiTqUD64xnpADjZiY1HN37',
   XRapidAPIHostHeaderName: 'X-RapidAPI-Host',
   XRapidAPIHostHeaderValue: 'weather-by-api-ninjas.p.rapidapi.com',
   XRapidAPIKeyHeaderName: 'X-RapidAPI-Key',
