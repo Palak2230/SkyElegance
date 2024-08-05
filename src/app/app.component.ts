@@ -1,12 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { WeatherService } from './services/weather.service';
 import { WeatherData } from './models/weather.model';
+import { FormControl } from '@angular/forms';
+import { map, Observable, startWith } from 'rxjs';
+import { ChangeDetectorRef } from '@angular/core';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 
 })
+// lat
+// : 
+// 26.95252425
+// lon
+// : 
+// 75.70330279413204
 export class AppComponent implements OnInit {
   title(title: any) {
     throw new Error('Method not implemented.');
@@ -20,8 +29,10 @@ export class AppComponent implements OnInit {
   shadow2: string = "#d3e6c6";
   textcolor: string = "black";
 
-  constructor(private weatherService: WeatherService) {
-    this.getWeatherData(this.cityName);
+  constructor(private weatherService: WeatherService, private cd: ChangeDetectorRef) {
+    this.getcityList(this.cityName);
+    // this.getWeatherData(this.cityName);
+
   }
 
   weatherData!: WeatherData;
@@ -65,34 +76,123 @@ export class AppComponent implements OnInit {
     this.date = new Date(unix * 1000);
     return this.date.toLocaleTimeString("en-US");
   }
+  filteroptions !: Observable<any[]>;
+  formcontrol = new FormControl('');
+  options: any[] = [];
   ngOnInit(): void {
-
+    this.getWeatherData(26.9525, 75.7033);
+    this.formcontrol.valueChanges.subscribe(value => {
+      if (this.formcontrol.value) { this.getcityList(this.formcontrol.value); }
+    });
   }
-
+  // private _FILTER(value: string) {
+  //   const searchvalue = value.toLocaleLowerCase();
+  //   return this.getcityList();
+  // }
+  cityselected: string = 'Jaipur';
   iserror: boolean = false;
   onSubmit() {
-    this.getWeatherData(this.cityName);
+    // this.getWeatherData(this.cityName);
     if (this.iserror) this.iserror = false;
   }
+  updateMySelection(event: any) {
+    console.log(event.source.value);
+    this.cityselected = event.source.value.formatted;
+    this.getWeatherData(event.source.value.lat, event.source.value.lon);
+    // console.log(this.cityselected);
+  }
+  item: any;
+  location: string = 'Jaipur';
+  response: any;
 
-  private getWeatherData(cityName: string) {
-    this.weatherService.getWeatherData(cityName)
+  private getWeatherData(lat: number, lon: number) {
+    this.weatherService.getWeatherData(lat, lon)
       .subscribe({
         next: (response) => {
-          this.weatherData = response;
-          this.city = cityName;
-          this.cityName = '';
+
+          this.item = response.main;
+          this.location = response.name;
+          this.response = response;
+
 
         },
         error: (error) => {
           alert('Please enter a valid city !!');
-          this.cityName = '';
+          // this.cityName = '';
           this.iserror = true;
         }
       });
 
   }
+  private getcityList(cityName: string) {
+    if (cityName == '') return;
+    this.weatherService.getcitylist(cityName)
+      .subscribe({
+        next: (response) => {
+          console.log(response);
+          this.options = response.features.map((item: any) => {
+            const { formatted } = item.properties;
+            const [lon, lat] = item.geometry.coordinates;
+            return { formatted, lon, lat };
 
+          });
+          // this.cd.detectChanges();
+          // console.log('Updated options:', this.options); // Log updated options
+        },
+        error: (error) => {
+          console.error('Error fetching city list:', error);
+          alert('Please enter a valid city !!');
+          this.cityName = '';
+          this.iserror = true;
+        }
+      });
+  }
 
 
 }
+// {
+//   "coord": {
+//       "lon": 10.99,
+//       "lat": 44.34
+//   },
+//   "weather": [
+//       {
+//           "id": 802,
+//           "main": "Clouds",
+//           "description": "scattered clouds",
+//           "icon": "03d"
+//       }
+//   ],
+//   "base": "stations",
+//   "main": {
+//       "temp": 301.3,
+//       "feels_like": 302.06,
+//       "temp_min": 299.99,
+//       "temp_max": 302.83,
+//       "pressure": 1011,
+//       "humidity": 53,
+//       "sea_level": 1011,
+//       "grnd_level": 946
+//   },
+//   "visibility": 10000,
+//   "wind": {
+//       "speed": 2.85,
+//       "deg": 52,
+//       "gust": 1.73
+//   },
+//   "clouds": {
+//       "all": 26
+//   },
+//   "dt": 1722771473,
+//   "sys": {
+//       "type": 2,
+//       "id": 2004688,
+//       "country": "IT",
+//       "sunrise": 1722744411,
+//       "sunset": 1722796640
+//   },
+//   "timezone": 7200,
+//   "id": 3163858,
+//   "name": "Zocca",
+//   "cod": 200
+// }
